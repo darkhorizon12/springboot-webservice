@@ -1,4 +1,4 @@
-package com.matey.bootwebservice.dto;
+package com.matey.bootwebservice.web.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

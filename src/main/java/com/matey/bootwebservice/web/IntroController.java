@@ -1,6 +1,6 @@
 package com.matey.bootwebservice.web;
 
-import com.matey.bootwebservice.dto.HelloResponseDTO;
+import com.matey.bootwebservice.web.dto.HelloResponseDTO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;

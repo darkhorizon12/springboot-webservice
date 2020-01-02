@@ -2,17 +2,18 @@ package com.matey.bootwebservice.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+
+import static javax.persistence.GenerationType.*;
 
 @NoArgsConstructor
 @Getter
 @Entity
-public class Posts {
-    @Id @GeneratedValue
+@ToString
+public class Posts extends BaseEntity {
+    @Id @GeneratedValue(strategy = IDENTITY)
     @Column(name = "post_id")
     private Long id;
 
@@ -24,28 +25,40 @@ public class Posts {
 
     private String author;
 
-    public Posts(Builder builder) {
+    public Posts(PostsBuilder builder) {
         this.title = builder.title;
         this.content = builder.content;
         this.author = builder.author;
     }
 
-    public static class Builder {
+    public static PostsBuilder builder() {
+        return new PostsBuilder();
+    }
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+    public static class PostsBuilder {
         private String title;
         private String content;
         private String author;
 
-        public Builder title(String title) {
+        public PostsBuilder() {
+        }
+
+        public PostsBuilder title(String title) {
             this.title = title;
             return this;
         }
 
-        public Builder content(String content) {
+        public PostsBuilder content(String content) {
             this.content = content;
             return this;
         }
 
-        public Builder author(String author) {
+        public PostsBuilder author(String author) {
             this.author = author;
             return this;
         }
