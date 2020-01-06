@@ -14,7 +14,7 @@ var index = {
 
         $.ajax({
             type: "POST",
-            url: "/posts/api/v1/posts",
+            url: "/api/v1/posts",
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data)

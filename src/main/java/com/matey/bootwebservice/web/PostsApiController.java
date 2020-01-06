@@ -7,7 +7,7 @@ import com.matey.bootwebservice.web.dto.PostsUpdateRequestDTO;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/posts")
+@RequestMapping("/api")
 public class PostsApiController {
     private final PostsService postsService;
 
@@ -15,17 +15,17 @@ public class PostsApiController {
         this.postsService = postsService;
     }
 
-    @PostMapping("/api/v1/posts")
+    @PostMapping("/v1/posts")
     public Long save(@RequestBody PostsSaveRequestDTO requestDTO) {
         return postsService.save(requestDTO);
     }
 
-    @PutMapping("/api/v1/posts/{id}")
+    @PutMapping("/v1/posts/{id}")
     public Long update(@PathVariable Long id, @RequestBody PostsUpdateRequestDTO requestDTO) {
         return postsService.update(id, requestDTO);
     }
 
-    @GetMapping("/api/v1/posts/{id}")
+    @GetMapping("/v1/posts/{id}")
     public PostResponseDTO findById(@PathVariable Long id) {
         return postsService.findById(id);
     }

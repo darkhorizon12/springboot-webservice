@@ -1,6 +1,7 @@
 package com.matey.bootwebservice.web;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matey.bootwebservice.domain.Posts;
 import com.matey.bootwebservice.domain.PostsRepository;
@@ -17,6 +18,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -25,6 +27,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -41,10 +45,12 @@ public class PostsApiControllerTest {
     public void setup() {
         mvc = MockMvcBuilders
                 .webAppContextSetup(context)
+                .apply(springSecurity())
                 .build();
     }
     @Test
-    public void 게시판_등록() throws URISyntaxException {
+    @WithMockUser(roles = "USER")
+    public void 게시판_등록() throws Exception {
         //given
         String title =  "title4Test";
         String content = "content4Test";
@@ -55,20 +61,23 @@ public class PostsApiControllerTest {
                 .author("author4Test")
                 .build();
 
-        String url = "http://localhost:" + port + "/posts/api/v1/posts";
+        String url = "http://localhost:" + port + "/api/v1/posts";
         //when
-        ResponseEntity<Long> responseEntity = this.restTemplate.postForEntity(url, requestDTO, Long.class);
+//        ResponseEntity<Long> responseEntity = this.restTemplate.postForEntity(url, requestDTO, Long.class);\
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(requestDTO)))
+                .andExpect(status().isOk());
+
 
         //then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isGreaterThan(0L);
-
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(title);
         assertThat(all.get(0).getContent()).isEqualTo(content);
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     public void 게시판_수정() throws Exception {
         //given
         Posts savedPosts = postsRepository.save(Posts.builder()
@@ -86,7 +95,7 @@ public class PostsApiControllerTest {
                 .content(expectedContent)
                 .build();
 
-        String url = "http://localhost:" + port + "/posts/api/v1/posts/" + updateId;
+        String url = "http://localhost:" + port + "/api/v1/posts/" + updateId;
 
         //when
         mvc.perform(put(url)

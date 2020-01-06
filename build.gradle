@@ -38,17 +38,20 @@ repositories {
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
-    compileOnly('org.projectlombok:lombok')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    compile('com.h2database:h2')
     compile('com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.7')
     compile('org.springframework.boot:spring-boot-starter-mustache')
+    compile('org.springframework.boot:spring-boot-starter-oauth2-client')
+    compile('org.springframework.session:spring-session-jdbc')
+    compile('org.apache.commons:commons-lang3')
+    compileOnly('org.projectlombok:lombok')
+    compile('com.h2database:h2')
     compile ("com.querydsl:querydsl-jpa") // querydsl
     annotationProcessor(
         compile ("com.querydsl:querydsl-apt"), // querydsl
         'org.projectlombok:lombok'
     )
-    //testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.security:spring-security-test')
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
