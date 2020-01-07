@@ -45,7 +45,8 @@ dependencies {
     compile('org.springframework.session:spring-session-jdbc')
     compile('org.apache.commons:commons-lang3')
     compileOnly('org.projectlombok:lombok')
-    compile('com.h2database:h2')
+//    compile('com.h2database:h2')
+    compile('org.mariadb.jdbc:mariadb-java-client')
     compile ("com.querydsl:querydsl-jpa") // querydsl
     annotationProcessor(
         compile ("com.querydsl:querydsl-apt"), // querydsl
