@@ -1,3 +1,5 @@
+import java.time.LocalDateTime
+
 buildscript {
     ext {
         springBootVersion = '2.2.2.RELEASE'
@@ -20,7 +22,7 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: "com.ewerk.gradle.plugins.querydsl"
 
 group 'com.matey'
-version '1.0.1-SNAPSHOT-' + new Date().format("yyyyMMddHHmmss")
+version '1.0.1-SNAPSHOT-' + LocalDateTime.now().format("yyyyMMddHHmmss")
 
 sourceCompatibility = 1.8
 
