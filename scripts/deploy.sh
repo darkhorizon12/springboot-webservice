@@ -5,6 +5,7 @@ PROJECT_NAME=springboot-webservice
 
 cd $REPOSITORY/zip/*.jar $REPOSITORY/
 
+
 echo "======== 현재 구동중인 어플리케이션 pid 확인"
 
 CURRENT_PID=$(pgrep -fl springboot-webservice | grep jar | awk '{print $1}')
